@@ -36,17 +36,7 @@ public class Splash extends BaseApp implements Animation.AnimationListener {
     public void resolveFinish() {
         Bitmap bit = BitmapFactory.decodeResource(getResources(),R.mipmap.jsahvc);
         mJSAHVC.setImageBitmap(BaseUtils.makeRound(bit,52));
-
-
-
-
-
         AnimationSet sets=new AnimationSet(true);
-
-
-
-
-        
         TranslateAnimation translate = new TranslateAnimation(0,0,-500,0);
         sets.addAnimation(translate);
         RotateAnimation rotate = new RotateAnimation(0,359+359+359+359, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
