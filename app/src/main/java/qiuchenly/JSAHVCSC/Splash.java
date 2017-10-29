@@ -40,9 +40,9 @@ public class Splash extends BaseApp {
 
         TranslateAnimation translate = new TranslateAnimation(0,0,-500,0);
         sets.addAnimation(translate);
-        //RotateAnimation rotate = new RotateAnimation(0,359+359+359+359, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-        //sets.addAnimation(rotate);
-        sets.setDuration(3000);
+        RotateAnimation rotate = new RotateAnimation(0,359+359+359+359, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        sets.addAnimation(rotate);
+        sets.setDuration(1500);
         sets.setFillAfter(true);
         mJSAHVC.setAnimation(sets);
     }
