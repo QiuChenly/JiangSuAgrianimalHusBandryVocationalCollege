@@ -2,6 +2,7 @@ package qiuchenly.JSAHVCSC.Base;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.*;
@@ -57,6 +58,9 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
     public abstract void resolveFinish();
     public abstract Sets getDefaultSet(Sets sets);
 
+    @Override
+    public abstract void onClick(View v);
+
     public <T extends View> T find(int ID) {
         return findViewById(ID);
     }
@@ -77,7 +81,6 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
         return t;
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK && DefaultSets.NullBack){
@@ -86,6 +89,21 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public abstract void onClick(View v);
+    public<T> void start(Class<T> cx){
+        startActivity(new Intent(this,cx));
+        jmpAnimation();
+        finish();
+    }
+
+    public<T> void start(Class<T> cx,boolean allowFinish){
+        startActivity(new Intent(this,cx));
+        jmpAnimation();
+        if(allowFinish) finish();
+    }
+
+    void jmpAnimation(){
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
+
+
 }

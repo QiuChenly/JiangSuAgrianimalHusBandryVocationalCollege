@@ -9,9 +9,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 /**
- * Author        : chenyuqi
+ * Author        : QiuChenLy
  * Times         : 2017 年 10 月 29 日 17:01
- * Usage         :
+ * Usage         :基本工具类，所有无关UI逻辑的方法代码写在这里
  */
 
 public class BaseUtils {
