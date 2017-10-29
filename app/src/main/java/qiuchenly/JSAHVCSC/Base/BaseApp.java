@@ -48,10 +48,13 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
         if (DefaultSets.allowStatusBarTranslate) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
-
-
+        findID();
+        resolveFinish();
     }
 
+    public abstract void findID();
+
+    public abstract void resolveFinish();
     public abstract Sets getDefaultSet(Sets sets);
 
     public <T extends View> T find(int ID) {
