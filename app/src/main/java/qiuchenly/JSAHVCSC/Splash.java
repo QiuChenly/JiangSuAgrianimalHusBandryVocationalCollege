@@ -44,7 +44,7 @@ public class Splash extends BaseApp implements Animation.AnimationListener {
         sets.setDuration(3000);
         sets.setFillAfter(true);
         sets.setAnimationListener(this);
-        mJSAHVC.setAnimation(sets);
+        mJSAHVC.setAnimation(sets);//设置总动画
     }
 
     @Override
