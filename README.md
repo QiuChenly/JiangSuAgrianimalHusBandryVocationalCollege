@@ -1,1 +1,1 @@
-# JiangSuAgrianimalVocationalCollege
+# JiangSuAgrianimalHusbandryVocationalCollege
