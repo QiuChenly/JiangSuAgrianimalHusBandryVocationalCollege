@@ -16,6 +16,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import qiuchenly.JSAHVCSC.Base.BaseApp;
 import qiuchenly.JSAHVCSC.Base.BaseUtils;
@@ -47,7 +48,7 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
         Bitmap bit = BitmapFactory.decodeResource(getResources(), R.mipmap.jsahvc);
         mJSAHVC.setImageBitmap(BaseUtils.makeRound(bit, 52));
 
-        int DEVICES_HEIGHT = getWindowManager().getDefaultDisplay().getHeight()/2;
+        int DEVICES_HEIGHT = getWindowManager().getDefaultDisplay().getHeight() / 2;
 
         ObjectAnimator animator_Translate = ObjectAnimator.ofFloat
                 (mJSAHVC, "TranslationY", -1 * DEVICES_HEIGHT, 0);
@@ -56,8 +57,8 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
 
         AnimatorSet set = new AnimatorSet();
         set.playTogether(animator_Translate, animator_Rotate);
-        set.setInterpolator(new OvershootInterpolator());
-        set.setDuration(3000);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.setDuration(1000);
         set.addListener(this);
         set.start();
     }
@@ -67,6 +68,7 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
     public void findID() {
         mJSAHVC = find(R.id.mJSAHVCImg);
         mLoginBox = find(R.id.mLoginBox);
+        mLoginBox.setVisibility(View.INVISIBLE);
     }
 
 
@@ -78,21 +80,52 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
     public void onAnimationEnd(Animator animator) {
         int BOX_HEIGHT;
         BOX_HEIGHT = mLoginBox.getHeight();
-        ViewGroup.LayoutParams layout = mLoginBox.getLayoutParams();
-        layout.height=0;
-        mLoginBox.setLayoutParams(layout);
 
-        ValueAnimator sizeAnimator = ValueAnimator.ofInt(0, BOX_HEIGHT);
-        sizeAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        ValueAnimator sizeAnimatorHide = ValueAnimator.ofInt(BOX_HEIGHT,0);
+        sizeAnimatorHide.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 mLoginBox.getLayoutParams().height = (int) valueAnimator.getAnimatedValue();
                 mLoginBox.requestLayout();
             }
         });
-        sizeAnimator.setDuration(1000);
-        sizeAnimator.start();
-//        start(Login.class);
+        sizeAnimatorHide.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                mLoginBox.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        sizeAnimatorHide.setDuration(600);
+
+
+        ValueAnimator sizeAnimatorShow = ValueAnimator.ofInt(0, BOX_HEIGHT);
+        sizeAnimatorShow.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                mLoginBox.getLayoutParams().height = (int) valueAnimator.getAnimatedValue();
+                mLoginBox.requestLayout();
+            }
+        });
+        sizeAnimatorShow.setDuration(800);
+        AnimatorSet set=new AnimatorSet();
+        set.playSequentially(sizeAnimatorHide,sizeAnimatorShow);
+        set.start();
+
     }
 
     @Override
