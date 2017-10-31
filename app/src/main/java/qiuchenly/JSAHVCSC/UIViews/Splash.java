@@ -147,6 +147,8 @@ public class Splash extends BaseApp implements Animator.AnimatorListener, Login_
         });
         sizeAnimatorHide.setDuration(600);
 
+
+        //TODO:这里加入自动登陆
         sizeAnimatorShow = ValueAnimator.ofInt(0, BOX_HEIGHT);
         sizeAnimatorShow.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
