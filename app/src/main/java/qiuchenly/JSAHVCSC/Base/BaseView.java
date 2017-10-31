@@ -5,5 +5,5 @@ package qiuchenly.JSAHVCSC.Base;
  */
 
 public interface BaseView<T> {
-    void Presenter(T presenter);
+    //void Presenter(T presenter);
 }

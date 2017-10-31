@@ -6,7 +6,7 @@ import qiuchenly.JSAHVCSC.Base.BaseApp;
 import qiuchenly.JSAHVCSC.Base.iSetting.Sets;
 import qiuchenly.JSAHVCSC.R;
 
-public class Login extends BaseApp {
+public class MainContent extends BaseApp {
 
     @Override
     public void findID() {
