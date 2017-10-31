@@ -20,7 +20,7 @@ public class MainContent extends BaseApp {
 
     @Override
     public Sets getDefaultSet(Sets sets) {
-        sets.ViewID = R.layout.view_login;
+        sets.ViewID = R.layout.view_content;
         sets.hideTitleBar = true;
         sets.allowStatusBarTranslate = true;
         return sets;
