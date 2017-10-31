@@ -21,12 +21,17 @@ import android.widget.Toast;
 import qiuchenly.JSAHVCSC.Base.BaseApp;
 import qiuchenly.JSAHVCSC.Base.BaseUtils;
 import qiuchenly.JSAHVCSC.Base.iSetting.Sets;
+import qiuchenly.JSAHVCSC.Presenter.LoginPresenter;
 import qiuchenly.JSAHVCSC.UIViews.Login;
 
 public class Splash extends BaseApp implements Animator.AnimatorListener {
     ImageView mJSAHVC;
 
     LinearLayout mLoginBox;
+
+    int BOX_HEIGHT;
+
+    LoginPresenter presenter;
 
     @Override
     public Sets getDefaultSet(Sets sets) {
@@ -61,6 +66,8 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
         set.setDuration(1000);
         set.addListener(this);
         set.start();
+
+        presenter = new LoginPresenter();
     }
 
 
@@ -78,10 +85,10 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
 
     @Override
     public void onAnimationEnd(Animator animator) {
-        int BOX_HEIGHT;
+
         BOX_HEIGHT = mLoginBox.getHeight();
 
-        ValueAnimator sizeAnimatorHide = ValueAnimator.ofInt(BOX_HEIGHT,0);
+        ValueAnimator sizeAnimatorHide = ValueAnimator.ofInt(BOX_HEIGHT, 0);
         sizeAnimatorHide.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -112,7 +119,6 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
         });
         sizeAnimatorHide.setDuration(600);
 
-
         ValueAnimator sizeAnimatorShow = ValueAnimator.ofInt(0, BOX_HEIGHT);
         sizeAnimatorShow.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -122,10 +128,9 @@ public class Splash extends BaseApp implements Animator.AnimatorListener {
             }
         });
         sizeAnimatorShow.setDuration(800);
-        AnimatorSet set=new AnimatorSet();
-        set.playSequentially(sizeAnimatorHide,sizeAnimatorShow);
+        AnimatorSet set = new AnimatorSet();
+        set.playSequentially(sizeAnimatorHide, sizeAnimatorShow);
         set.start();
-
     }
 
     @Override
