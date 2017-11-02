@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.*;
 import android.view.*;
+import android.widget.Toast;
 
 import qiuchenly.JSAHVCSC.Base.iSetting.Sets;
 
@@ -24,7 +25,7 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         DefaultSets = getDefaultSet(new Sets());
 
-        if(DefaultSets.ViewID<=0){
+        if (DefaultSets.ViewID <= 0) {
             new AlertDialog.Builder(this)
                     .setTitle("WARN!")
                     .setMessage("设置ViewID错误！请检查代码！")
@@ -34,7 +35,7 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
                             System.exit(0);
                         }
                     }).show();
-        }else{
+        } else {
             setContentView(DefaultSets.ViewID);
         }
 
@@ -56,6 +57,7 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
     public abstract void findID();
 
     public abstract void resolveFinish();
+
     public abstract Sets getDefaultSet(Sets sets);
 
     @Override
@@ -83,26 +85,34 @@ public abstract class BaseApp extends AppCompatActivity implements View.OnClickL
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && DefaultSets.NullBack){
+        if (keyCode == KeyEvent.KEYCODE_BACK && DefaultSets.NullBack) {
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    public<T> void start(Class<T> cx){
-        startActivity(new Intent(this,cx));
+    public <T> void start(Class<T> cx) {
+        startActivity(new Intent(this, cx));
         jmpAnimation();
         finish();
     }
 
-    public<T> void start(Class<T> cx,boolean allowFinish){
-        startActivity(new Intent(this,cx));
+    public <T> void start(Class<T> cx, boolean allowFinish) {
+        startActivity(new Intent(this, cx));
         jmpAnimation();
-        if(allowFinish) finish();
+        if (allowFinish) finish();
     }
 
-    void jmpAnimation(){
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    void jmpAnimation() {
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public <T> void Msg(T msg, boolean isLong) {
+        Toast.makeText(this, msg.toString(), (!isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT)).show();
+    }
+
+    public <T> void Msg(T msg) {
+        Toast.makeText(this, msg.toString(), Toast.LENGTH_SHORT).show();
     }
 
 

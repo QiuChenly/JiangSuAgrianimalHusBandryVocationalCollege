@@ -6,21 +6,19 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import qiuchenly.JSAHVCSC.Base.BaseApp;
 import qiuchenly.JSAHVCSC.Base.BaseUtils;
 import qiuchenly.JSAHVCSC.Base.iSetting.Sets;
+import qiuchenly.JSAHVCSC.Login.vCodeRet;
 import qiuchenly.JSAHVCSC.Presenter.LoginPresenter;
 import qiuchenly.JSAHVCSC.R;
 
@@ -35,13 +33,21 @@ public class Splash extends BaseApp implements Animator.AnimatorListener, Login_
 
     Button mLoginBtn;
 
+    ImageView mImageView;
+
+    /**
+     * 默认配置设定
+     *
+     * @param sets 默认传入的默认配置
+     * @return 将传入的默认配置修改后返回即可
+     */
     @Override
     public Sets getDefaultSet(Sets sets) {
-        sets.ViewID = R.layout.view_splash;
-        sets.allowStatusBarTranslate = true;
+        sets.ViewID = R.layout.view_splash;//设定View布局
+        sets.allowStatusBarTranslate = true;//设定状态栏透明
 //        sets.doubleClickToExit=false;
-        sets.hideTitleBar = true;
-        sets.NullBack = false;
+        sets.hideTitleBar = true;//隐藏ActionBar
+        sets.NullBack = false;//拦截返回键事件
         return sets;
     }
 
@@ -56,6 +62,8 @@ public class Splash extends BaseApp implements Animator.AnimatorListener, Login_
                 animator_Rotate.start();
                 presenter.login("", "", "");
                 break;
+            case R.id.mVCodeImage:
+                getImages();
             default:
                 break;
         }
@@ -95,6 +103,7 @@ public class Splash extends BaseApp implements Animator.AnimatorListener, Login_
         mLoginBox.setVisibility(View.INVISIBLE);
         mLoginBtn = find(R.id.mLoginBtn, true);
         mInfos = find(R.id.mInfos);
+        mImageView = find(R.id.mVCodeImage, true);
     }
 
 
@@ -161,6 +170,28 @@ public class Splash extends BaseApp implements Animator.AnimatorListener, Login_
         AnimatorSet set = new AnimatorSet();
         set.playSequentially(sizeAnimatorHide, sizeAnimatorShow);
         set.start();
+
+        getImages();
+
+    }
+
+    void getImages() {
+        if(!BaseUtils.checkInternetState(this)){
+            Msg("啊呀!哇网络掉线了...");
+            return;
+        }
+        //开始加载图片
+        presenter.getvCodeImage(new vCodeRet() {
+            @Override
+            public void onSucess(Bitmap bit) {
+                BaseUtils.setImage(mImageView, BaseUtils.roundRectF(bit,5));
+            }
+
+            @Override
+            public void onFailed(String errReason) {
+                Msg(errReason, false);
+            }
+        });
     }
 
     ValueAnimator sizeAnimatorShow;
